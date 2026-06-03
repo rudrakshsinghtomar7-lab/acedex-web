@@ -117,9 +117,16 @@ em { font-style:italic; color:var(--ink); }
 .hero-note { margin-top:22px; font-size:14px; line-height:1.62; color:var(--muted); max-width:38ch; }
 .hero-visual { display:flex; justify-content:center; }
 
-/* ── Feature (full-bleed statement) ────────────────────────── */
-.feature .lead-block { margin-bottom:clamp(40px,5vw,64px); }
-.feature .shell-wide { margin-block:clamp(8px,2vw,24px) clamp(44px,5vw,72px); }
+/* ── Feature (centered phone centerpiece on a soft stage) ──── */
+.feature .lead-block { margin-bottom:clamp(36px,4.5vw,60px); }
+.feature-stage {
+  display:flex; justify-content:center;
+  padding:clamp(40px,6vw,84px);
+  background:var(--surface-2);
+  border-radius:30px;
+  margin-bottom:clamp(40px,5vw,68px);
+}
+.feature-stage .shot--phone { max-width:300px; }
 .feature-prose { display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,64px); max-width:none; }
 .feature-prose .body { max-width:46ch; margin-top:0; }
 

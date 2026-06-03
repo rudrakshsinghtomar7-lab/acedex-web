@@ -95,7 +95,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── 2. The core idea — full-bleed statement + wide visual ── */}
+        {/* ── 2. The core idea — centered statement + phone centerpiece ── */}
         <section className="section feature">
           <div className="shell">
             <div className="lead-block reveal">
@@ -104,11 +104,9 @@ export default function App() {
                 Collaboration and integrity,<br />finally in one place.
               </h2>
             </div>
-          </div>
-          <div className="shell-wide reveal">
-            <Shot src="feature-workspace.png" label="Project workspace" alt="Acedex project workspace with tasks, files and review in one view" />
-          </div>
-          <div className="shell">
+            <div className="feature-stage reveal">
+              <Shot phone src="feature-workspace.png" label="PDF workspace" alt="Acedex PDF workspace — document open with highlight and comments" />
+            </div>
             <div className="feature-prose reveal">
               <p className="body">
                 Today coursework is split across tools that don't talk to each other.
@@ -153,7 +151,7 @@ export default function App() {
               </div>
             </div>
             <div className="split-visual reveal">
-              <Shot src="prof-dashboard.png" label="Professor dashboard" alt="Professor status dashboard across teams" />
+              <Shot phone src="prof-dashboard.png" label="Project overview" alt="Project overview with progress and milestones" />
             </div>
           </div>
         </section>
