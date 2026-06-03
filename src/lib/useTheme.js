@@ -3,17 +3,14 @@ import { useEffect, useState } from 'react';
 
 const KEY = 'acedex-site-theme';
 
-// Default to dark (the app's signature look). Respect a saved choice first,
-// then the OS preference, then fall back to dark.
+// Default to the polished light theme (the marketing site's primary look).
+// A saved choice always wins; dark stays available via the toggle.
 function initialTheme() {
   try {
     const saved = localStorage.getItem(KEY);
     if (saved === 'light' || saved === 'dark') return saved;
   } catch { /* localStorage may be unavailable */ }
-  if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-  return 'dark';
+  return 'light';
 }
 
 export function useTheme() {
@@ -22,7 +19,7 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'light' ? '#f7f8fb' : '#0a0b10');
+      ?.setAttribute('content', theme === 'light' ? '#f6f7f9' : '#0c0d12');
     try { localStorage.setItem(KEY, theme); } catch { /* ignore */ }
   }, [theme]);
 
