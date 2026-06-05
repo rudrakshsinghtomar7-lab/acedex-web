@@ -274,6 +274,57 @@ em { font-style:italic; color:var(--ink); }
 .stagger .point:nth-child(3) { transition-delay:.16s; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
 
+/* ── Showcase: student/professor screenshot toggle ─────────── */
+.showcase .lead-block { text-align:center; margin-inline:auto; }
+.showcase .lead-block .body { margin-inline:auto; }
+
+/* Segmented control */
+.seg {
+  position:relative; display:grid; grid-template-columns:1fr 1fr; gap:0;
+  width:max-content; max-width:100%; margin:36px auto 44px; padding:5px;
+  background:var(--surface-2); border:1px solid var(--hairline); border-radius:999px;
+}
+.seg-pill {
+  position:absolute; top:5px; bottom:5px; left:5px; width:calc(50% - 5px);
+  border-radius:999px; background:var(--surface); border:1px solid var(--line);
+  box-shadow:var(--shadow-soft);
+  transition:transform .42s cubic-bezier(.22,.61,.36,1);
+}
+.seg-pill[data-role="professor"] { transform:translateX(100%); }
+.seg-tab {
+  position:relative; z-index:1; appearance:none; border:none; background:transparent;
+  cursor:pointer; font-family:inherit; font-size:15px; font-weight:560;
+  color:var(--ink-2); padding:11px 30px; border-radius:999px;
+  transition:color .3s ease; white-space:nowrap;
+}
+.seg-tab.on { color:var(--indigo-ink); }
+
+/* Stage — four phone frames in a row. `fit-content` + auto margins centers the
+   row when it fits the viewport and lets it scroll cleanly (from the left, no
+   clipping) when it doesn't. No negative-margin breakout, so it stays safely
+   inside the page's horizontal bounds. */
+.showcase-stage {
+  display:flex; gap:24px; align-items:flex-start; flex-wrap:nowrap;
+  width:fit-content; max-width:100%; margin-inline:auto;
+  overflow-x:auto; scroll-snap-type:x proximity; padding-bottom:12px;
+  scrollbar-width:none;
+}
+.showcase-stage::-webkit-scrollbar { display:none; }
+.showcase-item { display:flex; flex-direction:column; align-items:center; gap:14px; flex:0 0 auto; scroll-snap-align:center; }
+.showcase-stage .shot--phone { width:218px; max-width:218px; }
+.showcase-cap { font-size:14px; font-weight:560; letter-spacing:-.01em; color:var(--ink-2); }
+
+/* Staggered fade — replays on every toggle because the stage is keyed by role */
+.showcase-item { animation:shotIn .55s cubic-bezier(.22,.61,.36,1) both; }
+.showcase-item:nth-child(2) { animation-delay:.07s; }
+.showcase-item:nth-child(3) { animation-delay:.14s; }
+.showcase-item:nth-child(4) { animation-delay:.21s; }
+@keyframes shotIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+@media (prefers-reduced-motion: reduce) {
+  .showcase-item { animation:none; }
+  .seg-pill { transition:none; }
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width:900px) {
   .hero-grid { grid-template-columns:1fr; gap:48px; }
@@ -298,4 +349,7 @@ em { font-style:italic; color:var(--ink); }
   .cmp-label { font-size:13.5px; }
   .mk em { display:none; }
   .foot-inner { flex-direction:column; gap:28px; }
+  .seg-tab { padding:11px 22px; font-size:14px; }
+  .showcase-stage { gap:18px; }
+  .showcase-stage .shot--phone { width:200px; max-width:200px; }
 }

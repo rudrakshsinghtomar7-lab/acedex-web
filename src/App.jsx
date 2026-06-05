@@ -3,6 +3,7 @@ import { useTheme } from './lib/useTheme.js';
 import { useReveal } from './lib/useReveal.js';
 import Waitlist from './components/Waitlist.jsx';
 import Shot from './components/Shot.jsx';
+import Showcase from './components/Showcase.jsx';
 
 // Draft legal pages live in the app (public routes). Update to acedex.com.au
 // paths once the apex domain is live.
@@ -188,6 +189,9 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        {/* ── 4b. Interactive — student / professor screenshot toggle ── */}
+        <Showcase />
 
         {/* ── 5. Differentiator — editorial comparison table ─────── */}
         <section className="section">
