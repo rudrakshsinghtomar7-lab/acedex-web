@@ -231,7 +231,9 @@ em { font-style:italic; color:var(--ink); }
 .shot { width:100%; border-radius:18px; overflow:hidden; background:var(--surface); border:1px solid var(--hairline); box-shadow:var(--shadow-visual); }
 .shot img { width:100%; height:auto; display:block; }
 .shot--phone { max-width:286px; border-radius:34px; padding:0; border:9px solid var(--ink); background:var(--ink); box-shadow:var(--shadow-visual); }
-.shot--phone img { border-radius:25px; }
+/* Reserve the phone's height from its intrinsic ratio so the frame never
+   collapses to 0 before the image decodes (no layout jump / "blank" frame). */
+.shot--phone img { border-radius:25px; aspect-ratio:738 / 1600; object-fit:cover; }
 
 /* Placeholder: faux chrome + static skeleton — reads as "designed", not broken. */
 .shot--ph { display:flex; flex-direction:column; background:linear-gradient(180deg,var(--surface),var(--surface-2)); }
@@ -299,6 +301,12 @@ em { font-style:italic; color:var(--ink); }
 }
 .seg-tab.on { color:var(--indigo-ink); }
 
+/* Both role sets stack in the same grid cell and crossfade. Keeping both mounted
+   means the images decode once on load, so flipping is an instant opacity swap
+   with no remount or re-fetch. */
+.showcase-stages { display:grid; grid-template-columns:minmax(0, 1fr); }
+.showcase-stages > .showcase-stage { grid-area:1 / 1; }
+
 /* Stage — four phone frames in a row. `fit-content` + auto margins centers the
    row when it fits the viewport and lets it scroll cleanly (from the left, no
    clipping) when it doesn't. No negative-margin breakout, so it stays safely
@@ -308,20 +316,20 @@ em { font-style:italic; color:var(--ink); }
   width:fit-content; max-width:100%; margin-inline:auto;
   overflow-x:auto; scroll-snap-type:x proximity; padding-bottom:12px;
   scrollbar-width:none;
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .3s ease, visibility 0s linear .3s;
+}
+.showcase-stage.on {
+  opacity:1; visibility:visible; pointer-events:auto;
+  transition:opacity .3s ease;
 }
 .showcase-stage::-webkit-scrollbar { display:none; }
 .showcase-item { display:flex; flex-direction:column; align-items:center; gap:14px; flex:0 0 auto; scroll-snap-align:center; }
 .showcase-stage .shot--phone { width:218px; max-width:218px; }
 .showcase-cap { font-size:14px; font-weight:560; letter-spacing:-.01em; color:var(--ink-2); }
 
-/* Staggered fade — replays on every toggle because the stage is keyed by role */
-.showcase-item { animation:shotIn .55s cubic-bezier(.22,.61,.36,1) both; }
-.showcase-item:nth-child(2) { animation-delay:.07s; }
-.showcase-item:nth-child(3) { animation-delay:.14s; }
-.showcase-item:nth-child(4) { animation-delay:.21s; }
-@keyframes shotIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
 @media (prefers-reduced-motion: reduce) {
-  .showcase-item { animation:none; }
+  .showcase-stage, .showcase-stage.on { transition:none; }
   .seg-pill { transition:none; }
 }
 

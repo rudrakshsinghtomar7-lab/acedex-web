@@ -1,8 +1,9 @@
 // © 2026 Rudraksh Singh Tomar. All rights reserved.
 // Student / Professor screenshot toggle. Same demo project (LLM Hallucination
 // Study) shown from both sides of the desk — flip the segmented control and the
-// whole set of four phone-framed shots swaps with a quiet staggered fade.
-// Pre-launch safe: images only, no app links.
+// four phone-framed shots crossfade. Both role sets stay mounted and eager-load
+// up front, so the images decode once and every flip is an instant opacity swap
+// (no remount, no re-fetch, no empty-frame flash). Pre-launch safe: images only.
 import { useState } from 'react';
 import Shot from './Shot.jsx';
 
@@ -57,13 +58,23 @@ export default function Showcase() {
           ))}
         </div>
 
-        {/* key=role remounts the row so the staggered fade replays on every flip */}
-        <div className="showcase-stage" key={role} role="tabpanel">
-          {SETS[role].map((s) => (
-            <figure className="showcase-item" key={s.src}>
-              <Shot phone src={s.src} alt={s.alt} label={s.cap} />
-              <figcaption className="showcase-cap">{s.cap}</figcaption>
-            </figure>
+        {/* Both sets are always mounted and stacked in the same grid cell; only
+            opacity/visibility flips, so toggling is instant and never re-decodes. */}
+        <div className="showcase-stages reveal">
+          {TABS.map(([key]) => (
+            <div
+              key={key}
+              className={`showcase-stage${role === key ? ' on' : ''}`}
+              role="tabpanel"
+              aria-hidden={role !== key}
+            >
+              {SETS[key].map((s) => (
+                <figure className="showcase-item" key={s.src}>
+                  <Shot phone eager src={s.src} alt={s.alt} label={s.cap} />
+                  <figcaption className="showcase-cap">{s.cap}</figcaption>
+                </figure>
+              ))}
+            </div>
           ))}
         </div>
       </div>
