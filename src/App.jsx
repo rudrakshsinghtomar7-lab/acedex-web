@@ -91,7 +91,7 @@ export default function App() {
             </div>
 
             <div className="hero-visual reveal">
-              <Shot phone src="hero-home.png" label="App home" alt="Acedex home screen showing projects and status" />
+              <Shot phone eager src="student/student-pdf-viewer.jpg" label="PDF reader" alt="Acedex PDF reader with highlights and inline comments" />
             </div>
           </div>
         </section>
@@ -106,7 +106,7 @@ export default function App() {
               </h2>
             </div>
             <div className="feature-stage reveal">
-              <Shot phone src="feature-workspace.png" label="PDF workspace" alt="Acedex PDF workspace — document open with highlight and comments" />
+              <Shot phone src="student/student-pdfs.jpg" label="PDFs & comments" alt="Project PDFs with reviewer comments" />
             </div>
             <div className="feature-prose reveal">
               <p className="body">
@@ -152,7 +152,7 @@ export default function App() {
               </div>
             </div>
             <div className="split-visual reveal">
-              <Shot phone src="prof-dashboard.png" label="Project overview" alt="Project overview with progress and milestones" />
+              <Shot phone src="professor/prof-dashboard.jpg" label="Dashboard" alt="Professor dashboard — supervised projects and status" />
             </div>
           </div>
         </section>
@@ -185,7 +185,7 @@ export default function App() {
               </div>
             </div>
             <div className="split-visual reveal">
-              <Shot phone src="student-tasks.png" label="Student tasks" alt="Student task list and workspace" />
+              <Shot phone src="feature/tasks.jpg" label="Tasks" alt="Task list with statuses and assignees" />
             </div>
           </div>
         </section>
