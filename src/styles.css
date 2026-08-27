@@ -374,6 +374,32 @@ em { font-style:italic; color:var(--ink); }
 }
 .showcase-stage::-webkit-scrollbar { display:none; }
 .showcase-item { display:flex; flex-direction:column; align-items:center; gap:14px; flex:0 0 auto; scroll-snap-align:center; }
+
+/* — Staggered settle: the four phones rise into place one after another —
+   The container keeps the `reveal` class purely as the scroll trigger (that is
+   what useReveal observes), but its own fade/rise is neutralized here: if the
+   block faded in as one unit the stagger underneath would be invisible.
+   Delays are applied ONLY in the .on state, so entering staggers while leaving
+   snaps back immediately — an exit stagger would drag against the .3s
+   crossfade and read as lag. Re-runs on every toggle, by design. */
+.showcase-stages.reveal { opacity:1; transform:none; transition:none; }
+
+/* A keyframe animation, deliberately NOT a transition. The inactive stage sits
+   under visibility:hidden, and a transition out of a subtree the browser never
+   rendered does not reliably fire — the phones would simply appear on toggle.
+   An animation re-runs every time the rule is applied, so flipping roles always
+   replays the settle. */
+@keyframes sc-settle {
+  from { opacity:0; transform:translateY(26px) scale(.985); }
+  to   { opacity:1; transform:none; }
+}
+.showcase-stage .showcase-item { opacity:0; }
+.showcase-stages.in .showcase-stage.on .showcase-item {
+  animation:sc-settle .85s cubic-bezier(.22,.61,.36,1) both;
+}
+.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(2) { animation-delay:.14s; }
+.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(3) { animation-delay:.28s; }
+.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(4) { animation-delay:.42s; }
 .showcase-stage .shot--phone { width:218px; max-width:218px; }
 .showcase-cap { font-size:14px; font-weight:560; letter-spacing:-.01em; color:var(--ink-2); }
 /* The showcase already labels each frame underneath it, so the placeholder's
@@ -383,6 +409,11 @@ em { font-style:italic; color:var(--ink); }
 @media (prefers-reduced-motion: reduce) {
   .showcase-stage, .showcase-stage.on { transition:none; }
   .seg-pill { transition:none; }
+  /* No rise, no stagger — the phones are simply present. */
+  .showcase-stage .showcase-item,
+  .showcase-stages.in .showcase-stage.on .showcase-item {
+    opacity:1; transform:none; animation:none; animation-delay:0s;
+  }
 }
 
 /* ── Responsive ────────────────────────────────────────────── */
