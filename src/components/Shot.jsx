@@ -10,12 +10,20 @@ import { useState } from 'react';
 // that's genuinely missing exhausts the retries and falls back to the skeleton.
 const MAX_RETRIES = 3;
 
+// The screenshot set is being re-shot against the new Study skin. Until the new
+// files land, every frame renders the designed placeholder rather than the old
+// pre-reskin images — short-circuited here so no request is even attempted (a
+// missing file would otherwise cost MAX_RETRIES round-trips per frame first).
+// Flip to true once the new images are in /public/screenshots; the src/alt/label
+// props on every call site are already correct, so nothing else changes.
+const SCREENSHOTS_READY = false;
+
 export default function Shot({ src, alt, label, phone = false, eager = false, className = '' }) {
   const [retry, setRetry] = useState(0);
   const [failed, setFailed] = useState(false);
   const base = src ? `${import.meta.env.BASE_URL}screenshots/${src}` : null;
   const url = base ? (retry > 0 ? `${base}?r=${retry}` : base) : null;
-  const showImg = url && !failed;
+  const showImg = SCREENSHOTS_READY && url && !failed;
 
   const onError = () => {
     if (retry < MAX_RETRIES) {

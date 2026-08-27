@@ -376,6 +376,9 @@ em { font-style:italic; color:var(--ink); }
 .showcase-item { display:flex; flex-direction:column; align-items:center; gap:14px; flex:0 0 auto; scroll-snap-align:center; }
 .showcase-stage .shot--phone { width:218px; max-width:218px; }
 .showcase-cap { font-size:14px; font-weight:560; letter-spacing:-.01em; color:var(--ink-2); }
+/* The showcase already labels each frame underneath it, so the placeholder's
+   own caption would print the same word twice. Suppress the inner one here. */
+.showcase-item .ph-cap { display:none; }
 
 @media (prefers-reduced-motion: reduce) {
   .showcase-stage, .showcase-stage.on { transition:none; }
