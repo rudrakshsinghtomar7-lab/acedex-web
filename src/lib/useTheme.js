@@ -19,7 +19,7 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'light' ? '#EFEAE3' : '#211C26');
+      ?.setAttribute('content', theme === 'light' ? '#F2EDE4' : '#1F1A24');
     try { localStorage.setItem(KEY, theme); } catch { /* ignore */ }
   }, [theme]);
 
