@@ -390,19 +390,19 @@ em { font-style:italic; color:var(--ink); }
    An animation re-runs every time the rule is applied, so flipping roles always
    replays the settle. */
 @keyframes sc-settle {
-  from { opacity:0; transform:translateY(34px) scale(.98); }
+  from { opacity:0; transform:translateY(44px) scale(.975); }
   to   { opacity:1; transform:none; }
 }
 .showcase-stage .showcase-item { opacity:0; }
-/* Travel is scaled up with the duration on purpose: the same 26px over a much
-   longer run reads as sluggish, whereas a longer drift keeps the perceived
-   speed natural while the whole row still takes ~2s to arrive. */
+/* Travel is scaled up with the duration on purpose: the same short distance
+   stretched over a much longer run reads as sluggish, whereas a longer drift
+   keeps the perceived speed natural. The row now takes ~3.1s end to end. */
 .showcase-stages.in .showcase-stage.on .showcase-item {
-  animation:sc-settle 1.3s cubic-bezier(.22,.61,.36,1) both;
+  animation:sc-settle 1.9s cubic-bezier(.22,.61,.36,1) both;
 }
-.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(2) { animation-delay:.24s; }
-.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(3) { animation-delay:.48s; }
-.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(4) { animation-delay:.72s; }
+.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(2) { animation-delay:.4s; }
+.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(3) { animation-delay:.8s; }
+.showcase-stages.in .showcase-stage.on .showcase-item:nth-child(4) { animation-delay:1.2s; }
 .showcase-stage .shot--phone { width:218px; max-width:218px; }
 .showcase-cap { font-size:14px; font-weight:560; letter-spacing:-.01em; color:var(--ink-2); }
 /* The showcase already labels each frame underneath it, so the placeholder's
