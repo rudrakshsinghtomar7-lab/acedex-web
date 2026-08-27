@@ -10,13 +10,11 @@ import { useState } from 'react';
 // that's genuinely missing exhausts the retries and falls back to the skeleton.
 const MAX_RETRIES = 3;
 
-// The screenshot set is being re-shot against the new Study skin. Until the new
-// files land, every frame renders the designed placeholder rather than the old
-// pre-reskin images — short-circuited here so no request is even attempted (a
-// missing file would otherwise cost MAX_RETRIES round-trips per frame first).
-// Flip to true once the new images are in /public/screenshots; the src/alt/label
-// props on every call site are already correct, so nothing else changes.
-const SCREENSHOTS_READY = false;
+// Set false to fall back to the designed placeholder on every frame (short-
+// circuits before the fetch, so a missing file costs no round-trips). True once
+// real screenshots are in /public/screenshots — see the README there for the
+// capture spec.
+const SCREENSHOTS_READY = true;
 
 export default function Shot({ src, alt, label, phone = false, eager = false, className = '' }) {
   const [retry, setRetry] = useState(0);
