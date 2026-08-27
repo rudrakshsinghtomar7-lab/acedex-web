@@ -363,7 +363,13 @@ em { font-style:italic; color:var(--ink); }
 .showcase-stage {
   display:flex; gap:24px; align-items:flex-start; flex-wrap:nowrap;
   width:fit-content; max-width:100%; margin-inline:auto;
-  overflow-x:auto; scroll-snap-type:x proximity; padding-bottom:12px;
+  /* overflow-x:auto forces overflow-y to compute to auto too, so this is a
+     clipping scroll container in BOTH axes. The phone shadows spill past the
+     content box and get sliced off at the bounds — which is what read as a
+     hard-edged slab behind the row. This padding gives the (now smaller)
+     shadow room to fade out inside the clip. */
+  overflow-x:auto; scroll-snap-type:x proximity;
+  padding:30px 30px 22px;
   scrollbar-width:none;
   opacity:0; visibility:hidden; pointer-events:none;
   transition:opacity .3s ease, visibility 0s linear .3s;
@@ -382,7 +388,9 @@ em { font-style:italic; color:var(--ink); }
    Delays are applied ONLY in the .on state, so entering staggers while leaving
    snaps back immediately — an exit stagger would drag against the .3s
    crossfade and read as lag. Re-runs on every toggle, by design. */
-.showcase-stages.reveal { opacity:1; transform:none; transition:none; }
+/* (The stages container carries `reveal-repeat`, not `reveal`, so it never
+   picks up the one-shot block fade — no neutralizer needed. `reveal-repeat`
+   re-arms `.in` on every scroll-away, which is what replays the stagger.) */
 
 /* A keyframe animation, deliberately NOT a transition. The inactive stage sits
    under visibility:hidden, and a transition out of a subtree the browser never
@@ -403,7 +411,17 @@ em { font-style:italic; color:var(--ink); }
 .showcase-stages.in .showcase-stage.on .showcase-item:nth-child(2) { animation-delay:.4s; }
 .showcase-stages.in .showcase-stage.on .showcase-item:nth-child(3) { animation-delay:.8s; }
 .showcase-stages.in .showcase-stage.on .showcase-item:nth-child(4) { animation-delay:1.2s; }
-.showcase-stage .shot--phone { width:218px; max-width:218px; }
+/* These are 218px thumbnails, not hero visuals — --elev-lift is sized for the
+   286px hero frame, and four of them side by side merge into one continuous
+   dark haze rather than four separate liftings. A tighter shadow keeps each
+   phone distinct and stays well inside the scroll container's clip. */
+.showcase-stage .shot--phone {
+  width:218px; max-width:218px;
+  box-shadow:0 6px 16px rgba(70,50,32,.10);
+}
+[data-theme="dark"] .showcase-stage .shot--phone {
+  box-shadow:0 6px 16px rgba(0,0,0,.32);
+}
 .showcase-cap { font-size:14px; font-weight:560; letter-spacing:-.01em; color:var(--ink-2); }
 /* The showcase already labels each frame underneath it, so the placeholder's
    own caption would print the same word twice. Suppress the inner one here. */

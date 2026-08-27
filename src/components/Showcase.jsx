@@ -60,7 +60,7 @@ export default function Showcase() {
 
         {/* Both sets are always mounted and stacked in the same grid cell; only
             opacity/visibility flips, so toggling is instant and never re-decodes. */}
-        <div className="showcase-stages reveal">
+        <div className="showcase-stages reveal-repeat">
           {TABS.map(([key]) => (
             <div
               key={key}
